@@ -1,0 +1,12 @@
+go mod init SOMENAME
+
+go test
+
+go build
+
+go install golang.org/x/tools/cmd/godoc@latest
+
+godoc -http :8000
+
+http://localhost:8000/pkg/
+
