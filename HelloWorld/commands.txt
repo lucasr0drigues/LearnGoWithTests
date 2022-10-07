@@ -13,3 +13,5 @@ http://localhost:8000/pkg/
 go test -bench="."
 
 go test -cover
+
+go install github.com/kisielk/errcheck@latest
