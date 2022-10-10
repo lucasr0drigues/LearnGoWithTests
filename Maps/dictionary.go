@@ -1,7 +1,5 @@
 package main
 
-import "errors"
-
 type Dictionary map[string]string
 
 type DictionaryErr string
@@ -42,4 +40,8 @@ func (d Dictionary) Add(word, definition string) error{
 
 func (e DictionaryErr) Error() string{
 	return string(e)
+}
+
+func (d Dictionary) Update(word, definition string){
+	d[word] = definition
 }
