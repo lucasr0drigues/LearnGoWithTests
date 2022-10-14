@@ -10,6 +10,14 @@ import (
 const finalWorld = "Go!"
 const countdownStart = 3
 
+type Sleeper interface {
+	Sleep()
+}
+
+type SpySleeper struct {
+	Calls int
+}
+
 func main() {
 	Countdown(os.Stdout)
 }
@@ -21,4 +29,8 @@ func Countdown(out io.Writer){
 	}
 
 	fmt.Fprintf(out, finalWorld)
+}
+
+func (s *SpySleeper) Sleep(){
+	s.Calls++
 }
