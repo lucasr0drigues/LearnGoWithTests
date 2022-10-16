@@ -9,6 +9,8 @@ import (
 
 const finalWorld = "Go!"
 const countdownStart = 3
+const write = "write"
+const sleep = "sleep"
 
 type Sleeper interface {
 	Sleep()
@@ -22,6 +24,15 @@ type SpySleeper struct {
 
 type SpyCountdownOperations struct {
 	Calls []string
+}
+
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep func(time.Duration)
+}
+
+type SpyTime struct {
+	durationSlept time.Duration
 }
 
 func main() {
@@ -55,5 +66,10 @@ func (s *SpyCountdownOperations) Write(p []byte) (n int, err error){
 	return
 }
 
-const write = "write"
-const sleep = "sleep"
+func (s *SpyTime) Sleep(duration time.Duration){
+	s.durationSlept = duration
+}
+
+func (c *ConfigurableSleeper) Sleep(){
+	c.sleep(c.duration)
+}
