@@ -15,3 +15,5 @@ go test -bench="."
 go test -cover
 
 go install github.com/kisielk/errcheck@latest
+
+go test -race
