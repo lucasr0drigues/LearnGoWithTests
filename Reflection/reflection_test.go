@@ -77,14 +77,6 @@ func TestWalk(t *testing.T) {
 			},
 			[]string{"London", "Reykjavik"},
 		},
-		{
-			"maps",
-			map[string]string{
-				"Foo": "Bar",
-				"Baz": "Boz",
-			},
-			[]string{"Bar", "Boz"},
-		},
 	}
 
 	for _, test := range cases {
@@ -99,5 +91,56 @@ func TestWalk(t *testing.T) {
 				t.Errorf("got %v, want %v", got, test.ExpectedCalls)
 			}
 		})
+	}
+
+	t.Run("With maps", func(t *testing.T) {
+		aMap := map[string]string{
+				"Foo": "Bar",
+				"Baz": "Boz",
+			}
+
+		var got []string
+		walk(aMap, func(input string) {
+			got = append(got, input)
+		})
+
+		assertContains(t, got, "Bar")
+		assertContains(t, got, "Boz")
+	})
+
+	t.Run("With channels", func(t *testing.T) {
+		aChannel := make(chan Profile)
+
+		go func() {
+			aChannel <- Profile{33, "Berlin"}
+			aChannel <- Profile{34, "Katowice"}
+			close(aChannel)
+		}()
+
+		var got []string
+		want := []string{"Berlin", "Katowice"}
+
+		walk(aChannel, func(input string) {
+			got = append(got, input)
+		})
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+}
+
+func assertContains(t testing.TB, haystack []string, needle string) {
+	t.Helper()
+	contains := false
+
+	for _, x := range haystack {
+		if x == needle {
+			contains = true
+		}
+	}
+
+	if !contains {
+		t.Errorf("expected %+v to contains %q but it didn't", haystack, needle)
 	}
 }
