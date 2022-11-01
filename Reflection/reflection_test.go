@@ -1,4 +1,4 @@
-package main
+package reflection
 
 import (
 	"reflect"
@@ -6,21 +6,21 @@ import (
 )
 
 type Person struct {
-	Name string
+	Name    string
 	Profile Profile
 }
 
 type Profile struct {
-	Age int
+	Age  int
 	City string
 }
 
 func TestWalk(t *testing.T) {
 
 	cases := []struct {
-		Name			string
-		input			interface{}
-		ExpectedCalls	[]string
+		Name          string
+		input         interface{}
+		ExpectedCalls []string
 	}{
 		{
 			"struct with one string field",
@@ -35,19 +35,19 @@ func TestWalk(t *testing.T) {
 				Name string
 				City string
 			}{"Chris", "London"},
-			[]string{"Chris","London"},
+			[]string{"Chris", "London"},
 		},
 		{
 			"struct with non string field",
 			struct {
 				Name string
-				Age int
+				Age  int
 			}{"Chris", 33},
 			[]string{"Chris"},
 		},
 		{
 			"nested fields",
-			Person {
+			Person{
 				"Chris",
 				Profile{33, "London"},
 			},
@@ -59,11 +59,11 @@ func TestWalk(t *testing.T) {
 				"Chris",
 				Profile{33, "London"},
 			},
-			[]string{"Chris","London"},
+			[]string{"Chris", "London"},
 		},
 		{
 			"slices",
-			[]Profile {
+			[]Profile{
 				{33, "London"},
 				{34, "Reykjavik"},
 			},
@@ -71,7 +71,7 @@ func TestWalk(t *testing.T) {
 		},
 		{
 			"arrays",
-			[2]Profile {
+			[2]Profile{
 				{33, "London"},
 				{34, "Reykjavik"},
 			},
@@ -95,9 +95,9 @@ func TestWalk(t *testing.T) {
 
 	t.Run("With maps", func(t *testing.T) {
 		aMap := map[string]string{
-				"Foo": "Bar",
-				"Baz": "Boz",
-			}
+			"Foo": "Bar",
+			"Baz": "Boz",
+		}
 
 		var got []string
 		walk(aMap, func(input string) {
@@ -130,7 +130,7 @@ func TestWalk(t *testing.T) {
 	})
 
 	t.Run("With function", func(t *testing.T) {
-		aFunction := func () (Profile, Profile)  {
+		aFunction := func() (Profile, Profile) {
 			return Profile{33, "Berlin"}, Profile{34, "Katowice"}
 		}
 

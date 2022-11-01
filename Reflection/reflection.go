@@ -1,4 +1,4 @@
-package main
+package reflection
 
 import "reflect"
 
@@ -9,7 +9,7 @@ func walk(x interface{}, fn func(input string)) {
 		walk(value.Interface(), fn)
 	}
 
-	switch val.Kind(){
+	switch val.Kind() {
 	case reflect.String:
 		fn(val.String())
 	case reflect.Struct:
