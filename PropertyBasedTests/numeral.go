@@ -36,3 +36,7 @@ func ConvertToRoman(arabic uint16) string {
 
 	return result.String()
 }
+
+func ConvertToArabic(roman string) uint16 {
+	return 1
+}
