@@ -1,6 +1,7 @@
-package blogposts
+package blogposts_test
 
 import (
+	"blogposts"
 	"testing"
 	"testing/fstest"
 )
