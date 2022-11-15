@@ -33,7 +33,7 @@ Tags: rust, borrow-checker`
 	}
 
 	got := posts[0]
-	want := blogposts.Post{Title: "Post 1", Description: "Description 1"}
+	want := blogposts.Post{Title: "Post 1", Description: "Description 1", Tags: []string{"tdd", "go"}}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
